@@ -1,6 +1,6 @@
 // MODELS
 const Pet = require('../models/pet');
-const mailer = requrire('../utils/mailer');
+const mailer = require('../utils/mailer');
 
 // PET ROUTES
 module.exports = (app) => {
@@ -23,6 +23,20 @@ module.exports = (app) => {
       .catch((err) => {
         // Handle Errors
       }) ;
+  });
+
+  // SEARCH PET
+  app.get('/search', (req, res) => {
+    term = new RegExp(req.query.term, 'i')
+    
+    // Pet.find({'name': term}).exec((err, pets) => { //finds just a pet by name
+    // find, searching both breed and name populating our list from each term, and not creating duplicates because of the 'or'
+    Pet.find({$or:[
+      {'name': term},
+      {'species': term}
+    ]}).exec((err, pets) => {
+        res.render('pets-index', { pets: pets });    
+    });
   });
 
   // SHOW PET
