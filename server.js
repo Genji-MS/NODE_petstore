@@ -21,6 +21,8 @@ const user = {
   email: 'Genji.Tapia@students.makeschool.com',
   name: 'Genji'
 };
+// Stripe keys
+app.locals.PUBLIC_STRIPE_API_KEY = process.env.STRIPE_PUBLISH_KEY
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
