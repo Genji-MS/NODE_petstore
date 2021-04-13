@@ -18,10 +18,13 @@ module.exports = (app) => {
 
     pet.save()
       .then((pet) => {
-        res.redirect(`/pets/${pet._id}`);
+        //using send, this route is called via scripts.js event listener, and not directly from the HTML
+        res.send({ pet: pet });
+        //res.redirect(`/pets/${pet._id}`);
       })
       .catch((err) => {
-        // Handle Errors
+        // STATUS OF 400 FOR VALIDATIONS
+        res.status(400).send(err.errors);
       }) ;
   });
 
