@@ -1,20 +1,24 @@
 // mailer.js
+const user = {
+    email: 'Genji.Tapia@students.makeschool.com',
+    name: 'Genji'
+};
 
 // require our mailgun dependencies
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
 // auth with our mailgun API key and domain
 const auth = {
-  auth: {
-    api_key: process.env.MAILGUN_API_KEY,
-    domain: process.env.EMAIL_DOMAIN
-  }
+    auth: {
+        api_key: process.env.MAILGUN_API_KEY,
+        domain: process.env.EMAIL_DOMAIN
+    }
 }
 // create a mailer
 const nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 // SEND EMAIL
-module.exports.sendMail = (user, req, res) => {
+module.exports.sendMail = ({user, petId}, req, res) => {
     // send an email to the user's email with a provided template
     nodemailerMailgun.sendMail({
         from: 'no-reply@example.com',
@@ -28,10 +32,10 @@ module.exports.sendMail = (user, req, res) => {
     // mail sent, redirect to purchase page
     }).then(info => {
         console.log('Response: ' + info);
-        res.redirect(`/pets/${req.params.id}`);
+        res.redirect(`/pets/${petId}`);
         // catch errosr and redirect regardless
     }).catch(err => {
         console.log('Error: ' + err);
-        res.redirect(`/pets/${req.params.id}`);
+        res.redirect(`/pets/${petId}`);
     });
 }

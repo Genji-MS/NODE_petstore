@@ -90,6 +90,8 @@ typings/
 # virtual env
 env/
 
+# uploads to S3 folder
+uploads/
 
 # End of https://www.gitignore.io/api/node,macos,bower
 todo.txt
